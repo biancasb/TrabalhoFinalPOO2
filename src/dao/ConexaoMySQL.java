@@ -17,7 +17,15 @@ public class ConexaoMySQL {
 	public static Connection getConnection() {
 		return connection;
 	}
-
+	
+	/**
+	 * 
+	 * @param serverAddress
+	 * @param database
+	 * @param username
+	 * @param password
+	 * @param port
+	 */
 	public static void configConnection(String serverAddress, String database, String username, String password,
 			int port) {
 		ConexaoMySQL.serverAddress = serverAddress;
@@ -31,12 +39,19 @@ public class ConexaoMySQL {
 
 	public static Connection abrirConexaoMySQL() {
 		try {
+		  
+				
+			 
 			connection = DriverManager.getConnection(url, username, password);
+			if(connection == null) {
+				throw new SQLException("Conexao Nula");
+			}
 			status = Status.SUCCESS;
-
+			
 			return connection;
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			status = Status.FAIL;
 			return null;
 		}
